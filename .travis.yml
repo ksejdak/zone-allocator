@@ -14,17 +14,12 @@ matrix:
 before_install:
   # Set the ${CC} ${CXX} variables properly.
   - eval ${COMPILER_ENV}
-
-install:
-#  - CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.tar.gz"
-#  - mkdir -p cmake
-#  - wget --no-check-certificate --quiet "${CMAKE_URL}" 
-#  - tar --strip-components=1 -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
-#  - tar -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
   - export PATH="${TRAVIS_BUILD_DIR}/tools:${PATH}"
   - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
   - mkdir -p ${DEPS_DIR}
   - cd ${DEPS_DIR}
+
+install:
   - ci_install-cmake.sh 3.10.2 ${TRAVIS_OS_NAME}
   - export PATH="${DEPS_DIR}/cmake/bin:${PATH}"
 
