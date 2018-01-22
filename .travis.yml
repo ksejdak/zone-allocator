@@ -12,9 +12,6 @@ matrix:
       env: COMPILER_ENV="CC=gcc-7 && CXX=g++-7"
 
 before_install:
-  # Set compilers.
-  - eval ${COMPILER_ENV}
-
   # Add CI scripts to PATH.
   - export PATH=${TRAVIS_BUILD_DIR}/tools:${PATH}
 
@@ -33,7 +30,11 @@ install:
   - export PATH=${DEPS_DIR}/clang/bin:${PATH}
 
 before_script:
- # - ${CXX} --version
+  # Set compilers.
+  - eval ${COMPILER_ENV}
+
+  # Check versions of used tools.
+  - ${CXX} --version
   - cmake --version
   - clang-format --version
 
@@ -44,8 +45,8 @@ script:
   - cd build
 #  - cmake ..
 #  - make
-#  - cd -
+#  - cd ${TRAVIS_BUILD_DIR}
 
 after_script:
   # Check code format using clang-format.
-  - ci_format.sh
+  - ci_format.sh .
