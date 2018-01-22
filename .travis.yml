@@ -21,18 +21,17 @@ install:
 #  - wget --no-check-certificate --quiet "${CMAKE_URL}" 
 #  - tar --strip-components=1 -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
 #  - tar -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
-  - echo ${TRAVIS_BUILD_DIR}
-  - echo $PWD
+  - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
+  - mkdir -p ${DEPS_DIR}
+  - cd ${DEPS_DIR}
   - tools/ci_install-cmake.sh 3.10.2 ${TRAVIS_OS_NAME}
-  - ls
-  - ls cmake
-  - export PATH="${PWD}/cmake/bin:${PATH}"
+  - export PATH="${DEPS_DIR}/cmake/bin:${PATH}"
 
 #  - tools/ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
-#  - export PATH="${PWD}/clang/bin:${PATH}"
   - echo ${PATH}
 
 before_script:
+  - cd ${TRAVIS_BUILD_DIR}
 #  - which ${CC}
 #  - which ${CXX}
   - which cmake
