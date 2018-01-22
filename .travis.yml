@@ -22,6 +22,8 @@ install:
 #  - tar --strip-components=1 -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
 #  - tar -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
   - tools/ci_install-cmake.sh 3.10.2 ${TRAVIS_OS_NAME}
+  - ls
+  - ls cmake
   - export PATH="${PWD}/cmake/bin:${PATH}"
 
 #  - tools/ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
