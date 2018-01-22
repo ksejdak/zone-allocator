@@ -32,6 +32,6 @@ PACKAGE_URL="https://cmake.org/files/v${SHORT_VERSION}/${PACKAGE_BIN_NAME}"
 
 wget --no-check-certificate ${PACKAGE_URL}
 mkdir -p cmake
-tar -xf ${PACKAGE_BIN_NAME} -C cmake
+tar --strip-components=1 -xf ${PACKAGE_BIN_NAME} -C cmake
 
 echo "Installing CMake v${VERSION} OK."
