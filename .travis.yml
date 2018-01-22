@@ -12,11 +12,11 @@ matrix:
       env: COMPILER_ENV="CC=gcc-7 && CXX=g++-7"
 
 before_install:
-  # Set the ${CC} ${CXX} variables properly.
+  # Set compilers.
   - eval ${COMPILER_ENV}
 
   # Add CI scripts to PATH.
-  - export PATH="${TRAVIS_BUILD_DIR}/tools:${PATH}"
+  - export PATH=${TRAVIS_BUILD_DIR}/tools:${PATH}
 
   # Create path for dependencies.
   - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
@@ -24,21 +24,20 @@ before_install:
   - cd ${DEPS_DIR}
 
 install:
+  # cmake
   - ci_install-cmake.sh 3.10.2 ${TRAVIS_OS_NAME}
+  - export PATH=${DEPS_DIR}/cmake/bin:${PATH}
 
-#  - ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
+  # clang-format
+  - ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
+  - export PATH=${DEPS_DIR}/clang/bin:${PATH}
 
 before_script:
-  - cd ${TRAVIS_BUILD_DIR}
-#  - which ${CC}
-#  - which ${CXX}
-  - which cmake
- # - which clang-format
-
  # - ${CXX} --version
   - cmake --version
- # - clang-format --version
- #cd ${TRAVIS_BUILD_DIR}
+  - clang-format --version
+
+  - cd ${TRAVIS_BUILD_DIR}
 
 script:
   - mkdir -p build

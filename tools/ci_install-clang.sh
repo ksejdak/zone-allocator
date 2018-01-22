@@ -29,8 +29,8 @@ PACKAGE_NAME="clang+llvm-${VERSION}-x86_64-${OS}"
 PACKAGE_BIN_NAME="${PACKAGE_NAME}.tar.xz"
 PACKAGE_URL="http://releases.llvm.org/${VERSION}/${PACKAGE_BIN_NAME}"
 
-wget --no-check-certificate ${PACKAGE_URL}
+wget --no-check-certificate --quiet ${PACKAGE_URL}
 mkdir -p clang
-tar -xf ${PACKAGE_BIN_NAME} -C clang
+tar --strip-components=1 -xf ${PACKAGE_BIN_NAME} -C clang
 
 echo "Installing clang v${VERSION} OK."
