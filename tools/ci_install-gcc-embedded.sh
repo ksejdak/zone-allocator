@@ -43,8 +43,8 @@ case "${VERSION}" in
 
 esac
 
-wget --no-check-certificate ${PACKAGE_URL} -O ${PACKAGE_BIN_NAME}
+wget --no-check-certificate --quiet ${PACKAGE_URL} -O ${PACKAGE_BIN_NAME}
 mkdir -p gcc
-tar -xf ${PACKAGE_BIN_NAME} -C gcc
+tar --strip-components=1 -xf ${PACKAGE_BIN_NAME} -C gcc
 
 echo "Installing arm-none-eabi-gcc v${VERSION} OK."
