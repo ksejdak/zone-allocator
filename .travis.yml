@@ -14,7 +14,11 @@ matrix:
 before_install:
   # Set the ${CC} ${CXX} variables properly.
   - eval ${COMPILER_ENV}
+
+  # Add CI scripts to PATH.
   - export PATH="${TRAVIS_BUILD_DIR}/tools:${PATH}"
+
+  # Create path for dependencies.
   - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
   - mkdir -p ${DEPS_DIR}
   - cd ${DEPS_DIR}
@@ -24,7 +28,6 @@ install:
   - export PATH="${DEPS_DIR}/cmake/bin:${PATH}"
 
 #  - tools/ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
-  - echo ${PATH}
 
 before_script:
   - cd ${TRAVIS_BUILD_DIR}
