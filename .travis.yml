@@ -21,6 +21,8 @@ install:
 #  - wget --no-check-certificate --quiet "${CMAKE_URL}" 
 #  - tar --strip-components=1 -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
 #  - tar -xf cmake-3.10.2-Linux-x86_64.tar.gz -C cmake
+  - echo ${TRAVIS_BUILD_DIR}
+  - echo $PWD
   - tools/ci_install-cmake.sh 3.10.2 ${TRAVIS_OS_NAME}
   - ls
   - ls cmake
