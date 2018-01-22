@@ -11,7 +11,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
-      env: COMPILER_ENV="CC=gcc-7 && CXX=g++-7"
+      env: COMPILER_ENV="CC=gcc-7 && CXX=g++-7" CMAKE_VERSION=3.10.2 CLANG_FORMAT=5.0.1
 
 before_install:
   # Add CI scripts to PATH.
@@ -24,11 +24,11 @@ before_install:
 
 install:
   # cmake
-  - ci_install-cmake.sh 3.10.2 ${TRAVIS_OS_NAME}
+  - ci_install-cmake.sh ${CMAKE_VERSION} ${TRAVIS_OS_NAME}
   - export PATH=${DEPS_DIR}/cmake/bin:${PATH}
 
   # clang-format
-  - ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
+  - ci_install-clang.sh ${CLANG_FORMAT} ${TRAVIS_OS_NAME}
   - export PATH=${DEPS_DIR}/clang/bin:${PATH}
 
 before_script:
