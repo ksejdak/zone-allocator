@@ -28,7 +28,7 @@ install:
   - export PATH=${DEPS_DIR}/cmake/bin:${PATH}
 
   # clang-format
-  - ci_install-clang.sh ${CLANG} ${TRAVIS_OS_NAME}
+  - ci_install-clang.sh ${CLANG_FORMAT} ${TRAVIS_OS_NAME}
   - export PATH=${DEPS_DIR}/clang/bin:${PATH}
 
 before_script:
