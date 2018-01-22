@@ -5,13 +5,14 @@ group: travis_latest
 matrix:
   include:
     - os: linux
+      compiler: g++-7
       addons:
         apt:
           sources: 
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
-      env: COMPILER_ENV="CC=gcc-7 && CXX=g++-7"
+      #env: COMPILER_ENV="CC=gcc-7 && CXX=g++-7"
 
 before_install:
   # Add CI scripts to PATH.
@@ -33,7 +34,7 @@ install:
 
 before_script:
   # Set compilers.
-  - eval ${COMPILER_ENV}
+  #- eval ${COMPILER_ENV}
 
   # Check versions of used tools.
   - ${CXX} --version
