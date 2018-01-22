@@ -3,12 +3,12 @@ language: cpp
 matrix:
   include:
     - os: linux
-      #addons:
-      #  apt:
-      #    sources: 
-      #      - ubuntu-toolchain-r-test
-      #    packages:
-      #      - g++-7
+      addons:
+        apt:
+          sources: 
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
       env: COMPILER_ENV="CC=gcc-7 && CXX=g++-7"
 
 before_install:
@@ -43,9 +43,9 @@ before_script:
 script:
   - mkdir -p build
   - cd build
-#  - cmake ..
-#  - make
-#  - cd ${TRAVIS_BUILD_DIR}
+  - cmake ..
+  - make
+  - cd ${TRAVIS_BUILD_DIR}
 
 after_script:
   # Check code format using clang-format.
