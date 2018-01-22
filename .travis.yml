@@ -25,9 +25,8 @@ before_install:
 
 install:
   - ci_install-cmake.sh 3.10.2 ${TRAVIS_OS_NAME}
-  - export PATH="${DEPS_DIR}/cmake/bin:${PATH}"
 
-#  - tools/ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
+#  - ci_install-clang.sh 5.0.1 ${TRAVIS_OS_NAME}
 
 before_script:
   - cd ${TRAVIS_BUILD_DIR}
@@ -50,4 +49,4 @@ script:
 
 #after_script:
   # Check code format using clang-format.
-#  - tools/ci_format.sh
+#  - ci_format.sh
