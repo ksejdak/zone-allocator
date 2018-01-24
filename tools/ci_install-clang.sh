@@ -2,6 +2,8 @@
 # $1 - clang version to be installed (e.g. 3.8.2)
 # $2 - Host OS (Linux or macOS)
 
+set -ev
+
 VERSION=${1}
 if [ "${2}" == "linux" ]; then
     OS="linux-gnu-ubuntu-14.04"
