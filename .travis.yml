@@ -29,8 +29,8 @@ install:
 
 before_script:
   # Set compilers.
-  - export CC="${CC}-${VERSION}""
-  - export CXX="${CXX}-${VERSION}""
+  - export CC="${CC}-${VERSION}"
+  - export CXX="${CXX}-${VERSION}"
 
   # Check versions of used tools.
   - ${CXX} --version
