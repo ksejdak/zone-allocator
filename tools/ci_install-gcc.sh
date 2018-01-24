@@ -27,7 +27,7 @@ echo "Installing gcc v${MAJOR_VERSION}"
 if [ "${OS}" == "linux" ]; then
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
     sudo apt-get update -qq
-    sudo apt-get install gcc-${MAJOR_VERSION} -y
+    sudo apt-get install gcc-${MAJOR_VERSION} g++-${MAJOR_VERSION} -y
 else
     brew install gcc@${MAJOR_VERSION}
 fi
