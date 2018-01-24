@@ -11,7 +11,7 @@ matrix:
             - g++-7
           sources: 
             - ubuntu-toolchain-r-test
-      env: GCC=7 CMAKE=3.10.2
+      env: CC=gcc CXX=g++ VERSION=7 CMAKE=3.10.2
 
 before_install:
   # Add CI scripts to PATH.
@@ -29,8 +29,8 @@ install:
 
 before_script:
   # Set compilers.
-  - export CC=gcc-${GCC}
-  - export CXX=g++-${GCC}
+  - export CC="${CC}-${VERSION}""
+  - export CXX="${CXX}-${VERSION}""
 
   # Check versions of used tools.
   - ${CXX} --version
