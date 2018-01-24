@@ -9,13 +9,13 @@ matrix:
       env: COMPILER_VER=7.2.0 CMAKE_VER=3.10.2
     - os: linux
       compiler: clang
-      env: COMPILER_VER=7.2.0 CMAKE_VER=3.10.2
+      env: COMPILER_VER=5.0.1 CMAKE_VER=3.10.2
     - os: osx
       compiler: gcc
       env: COMPILER_VER=7.2.0 CMAKE_VER=3.10.2
     - os: osx
       compiler: clang
-      env: COMPILER_VER=7.2.0 CMAKE_VER=3.10.2
+      env: COMPILER_VER=5.0.1 CMAKE_VER=3.10.2
 
 before_install:
   # Add CI scripts to PATH.
