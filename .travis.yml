@@ -6,12 +6,6 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      addons:
-        apt:
-          packages:
-            - g++-7
-          sources: 
-            - ubuntu-toolchain-r-test
       env: COMPILER_VER=7 CMAKE_VER=3.10.2
 
 before_install:
@@ -24,15 +18,16 @@ before_install:
   - cd ${DEPS_DIR}
 
 install:
-  # cmake
+  # Compiler.
+  - ci_install-${CC}.sh ${COMPILER_VER} ${TRAVIS_OS_NAME}
+  - export CC="${CC}-${COMPILER_VER}"
+  - export CXX="${CXX}-${COMPILER_VER}"
+
+  # CMake.
   - ci_install-cmake.sh ${CMAKE_VER} ${TRAVIS_OS_NAME}
   - export PATH=${DEPS_DIR}/cmake/bin:${PATH}
 
 before_script:
-  # Set compilers.
-  - export CC="${CC}-${COMPILER_VER}"
-  - export CXX="${CXX}-${COMPILER_VER}"
-
   # Check versions of used tools.
   - ${CXX} --version
   - cmake --version
