@@ -6,7 +6,7 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      env: COMPILER_VER=7 CMAKE_VER=3.10.2
+      env: COMPILER_VER=7.2.0 CMAKE_VER=3.10.2
 
 before_install:
   # Add CI scripts to PATH.
@@ -20,8 +20,16 @@ before_install:
 install:
   # Compiler.
   - ci_install-${CC}.sh ${COMPILER_VER} ${TRAVIS_OS_NAME}
-  - export CC="${CC}-${COMPILER_VER}"
-  - export CXX="${CXX}-${COMPILER_VER}"
+  - |
+    if [ "${CC}" == "gcc" ]; then
+      MAJOR_VER=`echo ${COMPILER_VER} | cut -d . -f 1`
+      export CC="${CC}-${MAJOR_VER}"
+      export CXX="${CXX}-${MAJOR_VER}"
+    else
+      MAJOR_VER=`echo ${COMPILER_VER} | cut -d . -f 1-2`
+      export CC="${CC}-${MAJOR_VER}"
+      export CXX="${CXX}"
+    fi
 
   # CMake.
   - ci_install-cmake.sh ${CMAKE_VER} ${TRAVIS_OS_NAME}
