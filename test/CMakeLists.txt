@@ -1,55 +1,21 @@
-#################################################################################################################
-# CMAKE SETTINGS
-#################################################################################################################
+project(zoneallocator_tests CXX)
 
-# Additional user defined macros.
-include(${CMAKE_SOURCE_DIR}/tools/cmake/macros.cmake)
-
-#################################################################################################################
-# PROJECT SETTINGS
-#################################################################################################################
-
-set(PROJECT_NAME "zone_allocator")
-project(${PROJECT_NAME} CXX)
-
-# Project paths.
-set(ALLOCATOR_SRC_PATH ${CMAKE_SOURCE_DIR}/src)
-
-#################################################################################################################
-# TOOLCHAIN SETTINGS
-#################################################################################################################
-
-set(CMAKE_BUILD_TYPE Debug)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-
-# List project configuration.
-show_build_configuration()
-
-#################################################################################################################
-# OTHER SETTINGS
-#################################################################################################################
-
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-#################################################################################################################
-# UNIT TEST APP
-#################################################################################################################
-
-include_directories(.)
-include_directories(../src)
-
-set(SOURCES
+add_executable(zoneallocator_tests
     catch.hpp
     main.cpp
-    test_page.cpp
     test_page_allocator.cpp
+    test_page.cpp
     test_region_info.cpp
     utils.h
 )
 
-register_executable(${PROJECT_NAME})
+target_compile_features(zoneallocator_tests PRIVATE cxx_std_17)
 
-link_targetEx(${PROJECT_NAME} ${ALLOCATOR_SRC_PATH})
+# Link with library private implementation for testing.
+get_target_property(ZONEALLOCATOR_INCLUDES zoneallocator INCLUDE_DIRECTORIES)
+target_include_directories(zoneallocator_tests PRIVATE ${ZONEALLOCATOR_INCLUDES})
+target_link_libraries(zoneallocator_tests PRIVATE zoneallocator)
 
-add_test(UnitTests ${EXECUTABLE_OUTPUT_PATH}/${PROJECT_NAME} -r xml -d yes --order lex "")
-add_test(IntegrationTests ${EXECUTABLE_OUTPUT_PATH}/${PROJECT_NAME} [.][integration] -r xml -d yes --order lex "")
+# Test definitions.
+add_test(UnitTests ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/zoneallocator_tests -r xml -d yes --order lex "")
+add_test(IntegrationTests ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/zoneallocator_tests [.][integration] -r xml -d yes --order lex "")
