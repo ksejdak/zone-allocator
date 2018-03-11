@@ -42,7 +42,7 @@ script:
   # Build.
   - mkdir -p build
   - cd build
-  - cmake ..
+  - cmake -DWITH_TESTS=ON ..
   - make
 
   # Run tests.
