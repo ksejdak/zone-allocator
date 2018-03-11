@@ -7,13 +7,13 @@ matrix:
     - os: linux
       env: COMPILER=gcc COMPILER_VER=7 CMAKE_VER=3.10.2
     - os: linux
-      env: COMPILER=clang COMPILER_VER=5.0 CMAKE_VER=3.10.2
+      env: COMPILER=clang COMPILER_VER=6.0 CMAKE_VER=3.10.2
     - os: osx
       osx_image: xcode9.2
       env: COMPILER=gcc COMPILER_VER=7 CMAKE_VER=3.10.2
     - os: osx
       osx_image: xcode9.2
-      env: COMPILER=clang COMPILER_VER=5.0 CMAKE_VER=3.10.2
+      env: COMPILER=clang COMPILER_VER=6.0 CMAKE_VER=3.10.2
 
 before_install:
   # Add CI scripts to PATH.
@@ -26,7 +26,7 @@ before_install:
 install:
   - install-${COMPILER}.sh ${COMPILER_VER} ${TRAVIS_OS_NAME}
   - install-cmake.sh ${CMAKE_VER} ${TRAVIS_OS_NAME}
-  - install-clang.sh 5.0 ${TRAVIS_OS_NAME} false
+  - install-clang.sh 6.0 ${TRAVIS_OS_NAME} false
 
 before_script:
   - export-paths.sh
