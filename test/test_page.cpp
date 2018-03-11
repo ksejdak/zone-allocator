@@ -26,7 +26,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 
 // Make access to private members for testing.
 // clang-format off

@@ -26,7 +26,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
-#include "catch.hpp"
+#include <catch2/catch.hpp>
+
 #include "utils.h"
 
 // Make access to private members for testing.
