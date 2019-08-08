@@ -55,10 +55,10 @@ before_install:
   - mkdir -p deps && cd $_
 
 install:
+  - pip3 install conan
   - install-${_CC}.sh ${CC_VER} ${TRAVIS_OS_NAME}
   - install-cmake.sh ${CMAKE_VER} ${TRAVIS_OS_NAME}
   - if [[ ${CLANG_CHECKS} == true ]]; then pip install pyyaml; fi
-  - install-cppcheck.sh ${TRAVIS_OS_NAME}
   - install-doxygen.sh ${TRAVIS_OS_NAME}
   - install-lcov.sh ${TRAVIS_OS_NAME}
 
@@ -69,7 +69,6 @@ before_script:
   - cmake --version
   - if [[ ${CLANG_CHECKS} == true ]]; then clang-format --version; fi
   - python3 --version
-  - cppcheck --version
   - doxygen --version
 
   - cd ${TRAVIS_BUILD_DIR}
@@ -100,5 +99,4 @@ script:
       check-clang-format.sh include/ src/ test/
       check-clang-tidy.sh build/
     fi
-  - check-cppcheck.sh include/ src/ .config/cppcheck.warn
   - check-doxygen.sh build/docs/doxygen.warn .config/doxygen.warn
