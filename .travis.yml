@@ -55,7 +55,6 @@ before_install:
   - mkdir -p deps && cd $_
 
 install:
-  - pip3 install conan
   - install-${_CC}.sh ${CC_VER} ${TRAVIS_OS_NAME}
   - install-cmake.sh ${CMAKE_VER} ${TRAVIS_OS_NAME}
   - if [[ ${CLANG_CHECKS} == true ]]; then pip install pyyaml; fi
