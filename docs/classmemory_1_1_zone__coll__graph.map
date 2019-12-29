@@ -1,9 +1,0 @@
-<map id="memory::Zone" name="memory::Zone">
-<area shape="rect" id="node1" title=" " alt="" coords="220,192,327,217"/>
-<area shape="rect" id="node2" href="$classmemory_1_1_list_node.html" title=" " alt="" coords="180,292,363,317"/>
-<area shape="rect" id="node3" href="$classmemory_1_1_page.html" title=" " alt="" coords="99,92,207,117"/>
-<area shape="rect" id="node4" href="$classmemory_1_1_list_node.html" title=" " alt="" coords="5,192,189,217"/>
-<area shape="rect" id="node5" href="$unionmemory_1_1_page_1_1_flags.html" title=" " alt="" coords="79,5,227,31"/>
-<area shape="rect" id="node6" href="$classmemory_1_1_chunk.html" title=" " alt="" coords="343,92,459,117"/>
-<area shape="rect" id="node7" href="$classmemory_1_1_list_node.html" title=" " alt="" coords="362,192,553,217"/>
-</map>
