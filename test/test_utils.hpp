@@ -41,12 +41,13 @@ namespace test {
 
 inline std::unique_ptr<std::byte, decltype(&std::free)> alignedAlloc(std::size_t alignment, std::size_t size)
 {
-    void* ptr = nullptr;
+//    void* ptr = nullptr;
 
     // TODO(kuba): This is a workaround for bug in GCC lacking std::aligned_alloc().
+    auto* ptr = aligned_alloc(alignment, size);
     // return std::unique_ptr<std::byte, decltype(&std::free)>(std::aligned_alloc(alignment, size));
-    auto result = posix_memalign(&ptr, alignment, size);
-    (void) result;
+//    auto result = posix_memalign(&ptr, alignment, size);
+//    (void) result;
 
     return std::unique_ptr<std::byte, decltype(&std::free)>(reinterpret_cast<std::byte*>(ptr), &std::free);
 }

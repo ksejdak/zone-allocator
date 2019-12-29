@@ -9,7 +9,7 @@ jobs:
       image: kubasejdak/gcc:${{ matrix.gcc }}
     strategy:
       matrix:
-        gcc: [9, 8, 7]
+        gcc: [9]
         mode: [Debug, Release]
 
     steps:
@@ -30,7 +30,7 @@ jobs:
       image: kubasejdak/clang:${{ matrix.clang }}
     strategy:
       matrix:
-        clang: [9, 8, 7]
+        clang: [9]
         mode: [Debug, Release]
 
     steps:
