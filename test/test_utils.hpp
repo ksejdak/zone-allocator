@@ -45,7 +45,7 @@ inline std::unique_ptr<std::byte, decltype(&std::free)> alignedAlloc(std::size_t
 
     // TODO(kuba): This is a workaround for bug in GCC lacking std::aligned_alloc().
     // return std::unique_ptr<std::byte, decltype(&std::free)>(std::aligned_alloc(alignment, size));
-    posix_memalign(&ptr, alignment, size);
+    (void) posix_memalign(&ptr, alignment, size);
 
     return std::unique_ptr<std::byte, decltype(&std::free)>(reinterpret_cast<std::byte*>(ptr), &std::free);
 }
