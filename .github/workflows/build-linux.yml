@@ -1,0 +1,46 @@
+name: Build Linux
+
+on: [push, pull_request]
+
+jobs:
+  linux-gcc:
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/gcc:${{ matrix.gcc }}
+    strategy:
+      matrix:
+        gcc: [9, 8, 7]
+        mode: [Debug, Release]
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Build application
+      run: |
+        mkdir build
+        cd build
+
+        conan install .. --build missing -s build_type=${{ matrix.mode }}
+        cmake .. -DPLATFORM=linux -DTOOLCHAIN=gcc-${{ matrix.gcc }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }}
+        make
+
+  linux-clang:
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/clang:${{ matrix.clang }}
+    strategy:
+      matrix:
+        clang: [9, 8, 7]
+        mode: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build application
+        run: |
+          mkdir build
+          cd build
+
+          conan install .. --build missing -s build_type=${{ matrix.mode }}
+          cmake .. -DPLATFORM=linux -DTOOLCHAIN=clang-${{ matrix.clang }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }}
+          make
