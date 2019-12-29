@@ -3,26 +3,27 @@ AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
+AlignConsecutiveMacros: true
 AlignEscapedNewlines: Right
 AlignOperands: true
 AlignTrailingComments: true
-#AllowAllArgumentsOnNextLine: false
-#AllowAllConstructorInitializersOnNextLine: false
+AllowAllArgumentsOnNextLine: false
+AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: InlineOnly
-AllowShortIfStatementsOnASingleLine: false
-#AllowShortLambdasOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: true
+AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
 BinPackParameters: false
 BraceWrapping:
-#  AfterCaseLabel: false
+  AfterCaseLabel: false
   AfterClass: false
   AfterControlStatement: false
   AfterEnum: false
@@ -62,7 +63,7 @@ IncludeCategories:
   - Regex:           '<([A-Za-z0-9\/_-])+>'
     Priority:        4
   # Headers in <> from specific external libraries.
-  - Regex:           '<((boost)|(catch2|fmt|spdlog|CLI))\/([A-Za-z0-9.\/_-])+>'
+  - Regex:           '<(boost|catch2|fmt|spdlog|CLI|range)\/([A-Za-z0-9.\/_-])+>'
     Priority:        3
   # Headers in <> with extension.
   - Regex:           '<([A-Za-z0-9.\/_-])+>'
@@ -80,9 +81,6 @@ MacroBlockBegin: ''
 MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-ObjCBlockIndentWidth: 4
-ObjCSpaceAfterProperty: false
-ObjCSpaceBeforeProtocolList: true
 PenaltyBreakAssignment: 2
 PenaltyBreakBeforeFirstCallParameter: 19
 PenaltyBreakComment: 300
@@ -95,7 +93,7 @@ ReflowComments: true
 SortIncludes: true
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: true
-#SpaceAfterLogicalNot: false
+SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeCpp11BracedList: false

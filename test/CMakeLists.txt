@@ -1,5 +1,7 @@
-add_executable(tests EXCLUDE_FROM_ALL
-    main.cpp
+add_subdirectory(init/${PLATFORM})
+
+add_library(appliballocator-tests OBJECT EXCLUDE_FROM_ALL
+    appMain.cpp
     integration/integration_page_allocator.cpp
     integration/integration_zone_allocator.cpp
     perf/perf_allocator.cpp
@@ -17,23 +19,23 @@ add_executable(tests EXCLUDE_FROM_ALL
 # Link with private implementation of library for testing.
 get_target_property(ALLOCATOR_INCLUDES liballocator INCLUDE_DIRECTORIES)
 
-target_include_directories(tests
+target_include_directories(appliballocator-tests
     PRIVATE . ${ALLOCATOR_INCLUDES}
 )
 
-target_compile_features(tests
+target_compile_features(appliballocator-tests
     PRIVATE cxx_std_17
 )
 
-target_link_libraries(tests
-    PUBLIC catch2
-    PRIVATE liballocator
+find_package(Catch2 REQUIRED)
+
+target_link_libraries(appliballocator-tests
+    PRIVATE platform-init Catch2::Catch2 liballocator
 )
 
-toolchain_setTargetOutputPath(tests ${CMAKE_BINARY_DIR}/bin)
-
-# Test definitions.
-get_target_property(RUNTIME_OUTPUT tests RUNTIME_OUTPUT_DIRECTORY)
-add_test(UnitTests ${RUNTIME_OUTPUT}/tests [unit] "")
-add_test(IntegrationTests ${RUNTIME_OUTPUT}/tests [integration] "")
-add_test(PerformanceTests ${RUNTIME_OUTPUT}/tests [perf] "")
+# This is required to selectively run Catch2 tests using tags on platforms, where cmd line arguments are not available.
+if (DEFINED TEST_TAGS)
+    target_compile_definitions(appliballocator-tests
+        PRIVATE TEST_TAGS="${TEST_TAGS}"
+    )
+endif ()

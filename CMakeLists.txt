@@ -1,46 +1,38 @@
-cmake_minimum_required(VERSION 3.14)
-include(tools/cmake/all.cmake)
+cmake_minimum_required(VERSION 3.15)
 
-utils_getVersion(VERSION)
-project(liballocator VERSION ${VERSION} LANGUAGES CXX)
+include(cmake/doxygen.cmake)
+include(cmake/platform.cmake)
 
-# Project options.
-option(LIBALLOCATOR_TESTS "Build unit tests" ON)
-option(LIBALLOCATOR_DOCS "Generate doxygen documentation" ON)
-option(LIBALLOCATOR_COVERAGE "Generate coverage report" OFF)
+if (NOT DEFINED PLATFORM)
+    message(FATAL_ERROR "'PLATFORM' is not defined!")
+endif ()
 
-# Common CMake options.
-if(NOT CMAKE_BUILD_TYPE)
+# Define application name and settings.
+set(APP liballocator-tests)
+include(test/${APP}.cmake)
+
+# Setup platform toolchain file.
+include(${platform_SOURCE_DIR}/app/${PLATFORM}/toolchain.cmake)
+
+project(liballocator VERSION 1.0.5 LANGUAGES CXX)
+
+if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
-endif()
+endif ()
 
-if(NOT CMAKE_EXPORT_COMPILE_COMMANDS)
-    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-endif()
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Add conan files.
+if (EXISTS ${CMAKE_BINARY_DIR}/conan_paths.cmake)
+    include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+endif ()
 
 # Project-wide compilation options.
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 
-if(LIBALLOCATOR_COVERAGE)
-    utils_log("Building liballocator with coverage report")
-    set(COVERAGE_IGNORE '${PROJECT_SOURCE_DIR}/test/*' '${PROJECT_SOURCE_DIR}/lib/*')
-    coverage_addTarget(${COVERAGE_IGNORE})
-endif()
-
+add_subdirectory(${platform_SOURCE_DIR}/app)
 add_subdirectory(lib)
-add_subdirectory(src)
+add_subdirectory(test)
 
-if(LIBALLOCATOR_TESTS)
-    toolchain_showConfig()
-    utils_log("Building liballocator with tests")
-    enable_testing()
-    add_subdirectory(test)
-endif()
-
-if(LIBALLOCATOR_DOCS)
-    utils_log("Building liballocator with docs")
-    doxygen_addTarget(${PROJECT_SOURCE_DIR})
-endif()
-
-# Export targets.
-export(TARGETS liballocator NAMESPACE liballocator FILE liballocator.cmake)
+# Generate documentation.
+doxygen_addTarget(${CMAKE_CURRENT_SOURCE_DIR}/lib README.md)

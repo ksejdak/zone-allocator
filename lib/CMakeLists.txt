@@ -1,4 +1,4 @@
-utils_log("Configuring '${CMAKE_CURRENT_SOURCE_DIR}/version.hpp'")
+message(STATUS "Configuring '${CMAKE_CURRENT_SOURCE_DIR}/version.hpp'")
 configure_file(version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/version.hpp)
 
 add_library(liballocator
@@ -12,13 +12,10 @@ add_library(liballocator
 )
 
 target_include_directories(liballocator
-    PUBLIC ../include
+    PUBLIC include
     PRIVATE .
 )
 
 target_compile_features(liballocator
     PRIVATE cxx_std_17
 )
-
-toolchain_setTargetOutputPath(liballocator ${CMAKE_BINARY_DIR}/bin)
-toolchain_showTargetConfig(liballocator)

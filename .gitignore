@@ -1,7 +1,7 @@
 # Object and executable files.
 build/
-cmake-build-*/
 bin/
+cmake-build-*/
 
 # Project files.
 CMakeLists.txt.user

@@ -1,17 +1,15 @@
 ---
-Checks:          'clang-diagnostic-*,clang-analyzer-*,*,
-                  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
-                  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
-                  -cppcoreguidelines-pro-type-reinterpret-cast,
-                  -fuchsia-default-arguments,
-                  -google-runtime-references,
-                  -hicpp-no-array-decay,
-                  -llvm-header-guard'
-WarningsAsErrors: '*'
-HeaderFilterRegex: ''
+Checks:              '*,
+                      -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+                      -fuchsia-default-arguments-calls,
+                      -fuchsia-default-arguments-declarations,
+                      -llvm-header-guard,
+                      -modernize-use-trailing-return-type'
+WarningsAsErrors:    '*'
+HeaderFilterRegex:   ''
 AnalyzeTemporaryDtors: false
-FormatStyle:     file
-User:            kuba
+FormatStyle:         file
+User:                kuba
 CheckOptions:
   - key:             abseil-string-find-startswith.AbseilStringsMatchHeader
     value:           absl/strings/match.h
@@ -330,7 +328,7 @@ CheckOptions:
   - key:             readability-identifier-naming.ConstantMemberCase
     value:           'CamelCase'
   - key:             readability-identifier-naming.ConstantMemberPrefix
-    value:           'c'
+    value:           'm_c'
   - key:             readability-identifier-naming.ConstantMemberSuffix
     value:           ''
   - key:             readability-identifier-naming.ConstantParameterCase
