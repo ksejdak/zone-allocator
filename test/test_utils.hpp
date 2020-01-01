@@ -4,7 +4,7 @@
 /// @author Kuba Sejdak
 /// @copyright BSD 2-Clause License
 ///
-/// Copyright (c) 2017-2019, Kuba Sejdak <kuba.sejdak@gmail.com>
+/// Copyright (c) 2017-2020, Kuba Sejdak <kuba.sejdak@gmail.com>
 /// All rights reserved.
 ///
 /// Redistribution and use in source and binary forms, with or without
@@ -41,14 +41,7 @@ namespace test {
 
 inline std::unique_ptr<std::byte, decltype(&std::free)> alignedAlloc(std::size_t alignment, std::size_t size)
 {
-//    void* ptr = nullptr;
-
-    // TODO(kuba): This is a workaround for bug in GCC lacking std::aligned_alloc().
     auto* ptr = aligned_alloc(alignment, size);
-    // return std::unique_ptr<std::byte, decltype(&std::free)>(std::aligned_alloc(alignment, size));
-//    auto result = posix_memalign(&ptr, alignment, size);
-//    (void) result;
-
     return std::unique_ptr<std::byte, decltype(&std::free)>(reinterpret_cast<std::byte*>(ptr), &std::free);
 }
 
