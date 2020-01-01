@@ -1,0 +1,53 @@
+name: Quality
+
+on: [push, pull_request]
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/clang:9
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Run clang-format
+      run: |
+        tools/check-clang-format.sh lib test
+
+    - name: Check results
+      run: |
+        git update-index -q --refresh
+        git diff-index --quiet HEAD
+        if [ ${?} -ne 0 ]; then
+            echo "The following bad source code formatting was detected:"
+            git --no-pager diff
+            exit 1
+        fi
+
+  clang-tidy:
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/${{ matrix.toolchain }}:9
+    strategy:
+      matrix:
+        platform: [linux]
+        include:
+          - platform: linux
+            toolchain: clang
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Generate compilation database
+        run: |
+          mkdir build
+          cd build
+
+          conan install .. --build missing
+          cmake .. -DPLATFORM=${{ matrix.platform }} -DTOOLCHAIN=${{ matrix.toolchain }}-9
+
+      - name: Run clang-tidy
+        run: |
+          cd build
+          ../tools/check-clang-tidy.sh
