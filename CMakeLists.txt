@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
+include(cmake/coverage.cmake)
 include(cmake/doxygen.cmake)
 include(cmake/platform.cmake)
 
@@ -16,6 +17,8 @@ include(${platform_SOURCE_DIR}/app/${PLATFORM}/toolchain.cmake)
 
 project(liballocator VERSION 1.0.5 LANGUAGES CXX)
 
+option(COVERAGE "Generate coverage report" OFF)
+
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif ()
@@ -29,6 +32,11 @@ endif ()
 
 # Project-wide compilation options.
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+
+# Generate coverage report.
+if (COVERAGE)
+    add_lcov_coverage(${platform_SOURCE_DIR}/app/* ${CMAKE_CURRENT_SOURCE_DIR}/test/*)
+endif ()
 
 add_subdirectory(${platform_SOURCE_DIR}/app)
 add_subdirectory(lib)
