@@ -1,0 +1,32 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/gcc:latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Generate Doxygen documentation
+      run: |
+        mkdir build
+        cd build
+
+        conan install .. --build missing
+        cmake .. -DPLATFORM=linux
+        make doxygen
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_GITHUB_PAGES }}
+        BASE_BRANCH: master
+        BRANCH: gh-pages
+        FOLDER: build/docs
