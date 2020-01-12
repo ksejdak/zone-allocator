@@ -3,7 +3,7 @@ name: Build Linux
 on: [push, pull_request]
 
 jobs:
-  linux-gcc:
+  build-linux-gcc:
     runs-on: ubuntu-latest
     container:
       image: kubasejdak/gcc:${{ matrix.gcc }}
@@ -29,7 +29,26 @@ jobs:
         name: build_gcc_${{ matrix.gcc }}_${{ matrix.mode }}
         path: .
 
-  linux-clang:
+  test-linux-gcc:
+    needs: build-linux-gcc
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/gcc:${{ matrix.gcc }}
+    strategy:
+      matrix:
+        gcc: [9]
+
+    steps:
+      - uses: actions/download-artifact@v1
+        with:
+          name: build_gcc_${{ matrix.gcc }}_Debug
+
+      - name: Run tests
+        run: |
+          ls -l
+          ls -l bin/
+
+  build-linux-clang:
     runs-on: ubuntu-latest
     container:
       image: kubasejdak/clang:${{ matrix.clang }}
@@ -54,3 +73,22 @@ jobs:
         with:
           name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
           path: .
+
+  test-linux-clang:
+    needs: build-linux-clang
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/clang:${{ matrix.clang }}
+    strategy:
+      matrix:
+        clang: [9]
+
+    steps:
+      - uses: actions/download-artifact@v1
+        with:
+          name: build_clang_${{ matrix.clang }}_Debug
+
+      - name: Run tests
+        run: |
+          ls -l
+          ls -l bin/
