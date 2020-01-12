@@ -27,7 +27,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: build_gcc_${{ matrix.gcc }}_${{ matrix.mode }}
-        path: build
+        path: build/bin
 
   test-linux-gcc:
     needs: build-linux-gcc
@@ -46,49 +46,4 @@ jobs:
       - name: Run tests
         run: |
           cd build_gcc_${{ matrix.gcc }}_Debug
-          ls -al
-
-  build-linux-clang:
-    runs-on: ubuntu-latest
-    container:
-      image: kubasejdak/clang:${{ matrix.clang }}
-    strategy:
-      matrix:
-        clang: [9]
-        mode: [Debug, Release]
-
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Build application
-        run: |
-          mkdir build
-          cd build
-
-          conan install .. --build missing -s build_type=${{ matrix.mode }}
-          cmake .. -DPLATFORM=linux -DTOOLCHAIN=clang-${{ matrix.clang }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCOVERAGE=ON
-          make
-
-      - uses: actions/upload-artifact@v1
-        with:
-          name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
-          path: build
-
-  test-linux-clang:
-    needs: build-linux-clang
-    runs-on: ubuntu-latest
-    container:
-      image: kubasejdak/clang:${{ matrix.clang }}
-    strategy:
-      matrix:
-        clang: [9]
-
-    steps:
-      - uses: actions/download-artifact@v1
-        with:
-          name: build_clang_${{ matrix.clang }}_Debug
-
-      - name: Run tests
-        run: |
-          cd build_clang_${{ matrix.clang }}_Debug
-          ls -al
+          ./liballocator-tests.elf [unit]
