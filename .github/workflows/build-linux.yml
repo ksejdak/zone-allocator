@@ -31,9 +31,8 @@ jobs:
 
     - name: Run tests
       run: |
-        whoami
+        chown -R root:root build
         cd build/bin
-        chown root:root liballocator-tests.elf
         ./liballocator-tests.elf [unit]
 
   test-linux-clang:
@@ -57,13 +56,18 @@ jobs:
           cmake .. -DPLATFORM=linux -DTOOLCHAIN=clang-${{ matrix.clang }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCOVERAGE=ON
           make
 
-#       - uses: actions/upload-artifact@v1
-#        with:
-#          name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
-#          path: build/bin
-#
-#      - name: Run tests
-#        run: |
-#          whoami
-#          cd build/bin
-#          sudo ./liballocator-tests.elf [unit]
+      - uses: actions/upload-artifact@v1
+        with:
+          name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
+          path: build/bin
+
+      - name: Run tests
+        run: |
+          chown -R root:root build
+          cd build/bin
+          ./liballocator-tests.elf [unit]
+
+      - name: Generate coverage report
+        run: |
+          cd build
+          make coverage
