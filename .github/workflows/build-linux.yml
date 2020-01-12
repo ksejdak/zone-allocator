@@ -1,4 +1,4 @@
-name: Build Linux
+name: Test Linux
 
 on: [push, pull_request]
 
@@ -27,7 +27,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: build_gcc_${{ matrix.gcc }}_${{ matrix.mode }}
-        path: .
+        path: build
 
   test-linux-gcc:
     needs: build-linux-gcc
@@ -46,7 +46,6 @@ jobs:
       - name: Run tests
         run: |
           ls -l
-          ls -l bin/
 
   build-linux-clang:
     runs-on: ubuntu-latest
@@ -72,7 +71,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
-          path: .
+          path: build
 
   test-linux-clang:
     needs: build-linux-clang
@@ -91,4 +90,3 @@ jobs:
       - name: Run tests
         run: |
           ls -l
-          ls -l bin/
