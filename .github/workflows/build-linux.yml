@@ -3,7 +3,7 @@ name: Test Linux
 on: [push, pull_request]
 
 jobs:
-  build-linux-gcc:
+  test-linux-gcc:
     runs-on: ubuntu-latest
     container:
       image: kubasejdak/gcc:${{ matrix.gcc }}
@@ -29,7 +29,13 @@ jobs:
         name: build_gcc_${{ matrix.gcc }}_${{ matrix.mode }}
         path: build/bin
 
-  build-linux-clang:
+    - name: Run tests
+      run: |
+        whoami
+        cd build/bin
+        sudo ./liballocator-tests.elf [unit]
+
+  test-linux-clang:
     runs-on: ubuntu-latest
     container:
       image: kubasejdak/clang:${{ matrix.clang }}
@@ -47,30 +53,16 @@ jobs:
           cd build
 
           conan install .. --build missing -s build_type=${{ matrix.mode }}
-          cmake .. -DPLATFORM=linux -DTOOLCHAIN=clang-${{ matrix.clang }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }}
+          cmake .. -DPLATFORM=linux -DTOOLCHAIN=clang-${{ matrix.clang }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }} -DCOVERAGE=ON
           make
 
-    - uses: actions/upload-artifact@v1
-      with:
-        name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
-        path: build/bin
-
-  test-linux-gcc:
-    needs: build-linux-gcc
-    runs-on: ubuntu-latest
-    container:
-      image: kubasejdak/gcc:${{ matrix.gcc }}
-    strategy:
-      matrix:
-        gcc: [9]
-
-    steps:
-      - uses: actions/download-artifact@v1
+      - uses: actions/upload-artifact@v1
         with:
-          name: build_gcc_${{ matrix.gcc }}_Debug
+          name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
+          path: build/bin
 
       - name: Run tests
         run: |
-          cd build_gcc_${{ matrix.gcc }}_Debug
           whoami
+          cd build/bin
           sudo ./liballocator-tests.elf [unit]
