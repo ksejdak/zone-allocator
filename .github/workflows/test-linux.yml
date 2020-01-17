@@ -43,7 +43,7 @@ jobs:
     - name: Upload coverage report
       run: |
         cd build
-        bash <(curl -s https://codecov.io/bash) -t adf60d97-c26f-497a-9564-f9bcada40714
+        bash -c "bash <(curl -s https://codecov.io/bash) -t adf60d97-c26f-497a-9564-f9bcada40714"
 
   test-linux-clang:
     runs-on: ubuntu-latest
