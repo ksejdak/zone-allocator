@@ -30,16 +30,18 @@ jobs:
         path: build/bin
 
     - name: Run tests
+      if: matrix.mode == Debug
       run: |
         chown -R root:root build
         cd build/bin
         ./liballocator-tests.elf [unit]
 
     - name: Generate and upload coverage report
+      if: matrix.mode == Debug
       run: |
         cd build
         make coverage
-        bash <(curl -s https://codecov.io/bash)
+        bash <(curl -s https://codecov.io/bash) -t adf60d97-c26f-497a-9564-f9bcada40714
 
   test-linux-clang:
     runs-on: ubuntu-latest
@@ -68,7 +70,7 @@ jobs:
           path: build/bin
 
       - name: Run tests
-        if:
+        if: matrix.mode == Debug
         run: |
           chown -R root:root build
           cd build/bin
