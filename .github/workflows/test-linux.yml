@@ -62,6 +62,7 @@ jobs:
           path: build/bin
 
       - name: Run tests
+        if: 
         run: |
           chown -R root:root build
           cd build/bin
