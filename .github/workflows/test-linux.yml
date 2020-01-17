@@ -35,11 +35,15 @@ jobs:
         cd build/bin
         ./liballocator-tests.elf [unit]
 
-    - name: Generate and upload coverage report
+    - name: Generate coverage report
       run: |
         cd build
         make coverage
-        bash <(curl -s https://codecov.io/bash) -t adf60d97-c26f-497a-9564-f9bcada40714
+
+    - name: Upload coverage report
+        run: |
+          cd build
+          bash <(curl -s https://codecov.io/bash) -t adf60d97-c26f-497a-9564-f9bcada40714
 
   test-linux-clang:
     runs-on: ubuntu-latest
