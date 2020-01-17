@@ -1,7 +1,11 @@
-[![Github Releases](https://img.shields.io/github/release/kubasejdak/liballocator.svg)](https://github.com/kubasejdak/liballocator/releases)
-[![Build Status](https://travis-ci.org/kubasejdak/liballocator.svg?branch=master)](https://travis-ci.org/kubasejdak/liballocator)
-[![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
+[![Test Linux](https://github.com/kubasejdak/liballocator/workflows/Test%20Linux/badge.svg)](https://github.com/kubasejdak/liballocator/actions?query=workflow%3A%22Test+Linux%22)
+
+[![Quality](https://github.com/kubasejdak/liballocator/workflows/Quality/badge.svg)](https://github.com/kubasejdak/liballocator/actions?query=workflow%3A%22Quality%22)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/kubasejdak/liballocator)](https://www.codefactor.io/repository/github/kubasejdak/liballocator)
 [![codecov.io](http://codecov.io/github/kubasejdak/liballocator/coverage.svg?branch=master)](http://codecov.io/github/kubasejdak/liballocator?branch=master)
+
+[![Github Releases](https://img.shields.io/github/release/kubasejdak/liballocator.svg)](https://github.com/kubasejdak/liballocator/releases)
+[![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 
 # liballocator
 
