@@ -30,14 +30,14 @@ jobs:
         path: build/bin
 
     - name: Run tests
-      if: matrix.mode == Debug
+      if: matrix.mode == "Debug"
       run: |
         chown -R root:root build
         cd build/bin
         ./liballocator-tests.elf [unit]
 
     - name: Generate and upload coverage report
-      if: matrix.mode == Debug
+      if: matrix.mode == "Debug"
       run: |
         cd build
         make coverage
@@ -70,7 +70,7 @@ jobs:
           path: build/bin
 
       - name: Run tests
-        if: matrix.mode == Debug
+        if: matrix.mode == "Debug"
         run: |
           chown -R root:root build
           cd build/bin
