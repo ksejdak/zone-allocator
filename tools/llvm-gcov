@@ -1,3 +1,0 @@
-#!/bin/bash
-
-llvm-cov-9 gcov "$*"

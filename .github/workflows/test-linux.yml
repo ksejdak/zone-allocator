@@ -35,45 +35,41 @@ jobs:
         cd build/bin
         ./liballocator-tests.elf [unit]
 
-    - name: Generate coverage report
+    - name: Generate and upload coverage report
       run: |
         cd build
         make coverage
+        bash <(curl -s https://codecov.io/bash)
 
-#  test-linux-clang:
-#    runs-on: ubuntu-latest
-#    container:
-#      image: kubasejdak/clang:${{ matrix.clang }}
-#    strategy:
-#      matrix:
-#        clang: [9]
-#        mode: [Debug, Release]
-#
-#    steps:
-#      - uses: actions/checkout@v1
-#
-#      - name: Build application
-#        run: |
-#          mkdir build
-#          cd build
-#
-#          conan install .. --build missing -s build_type=${{ matrix.mode }}
-#          cmake .. -DPLATFORM=linux -DTOOLCHAIN=clang-${{ matrix.clang }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }}
-#          make
-#
-#      - uses: actions/upload-artifact@v1
-#        with:
-#          name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
-#          path: build/bin
-#
-#      - name: Run tests
-#        if:
-#        run: |
-#          chown -R root:root build
-#          cd build/bin
-#          ./liballocator-tests.elf [unit]
-#
-#      - name: Generate coverage report
-#        run: |
-#          cd build
-#          make coverage
+  test-linux-clang:
+    runs-on: ubuntu-latest
+    container:
+      image: kubasejdak/clang:${{ matrix.clang }}
+    strategy:
+      matrix:
+        clang: [9]
+        mode: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build application
+        run: |
+          mkdir build
+          cd build
+
+          conan install .. --build missing -s build_type=${{ matrix.mode }}
+          cmake .. -DPLATFORM=linux -DTOOLCHAIN=clang-${{ matrix.clang }} -DCMAKE_BUILD_TYPE=${{ matrix.mode }}
+          make
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: build_clang_${{ matrix.clang }}_${{ matrix.mode }}
+          path: build/bin
+
+      - name: Run tests
+        if:
+        run: |
+          chown -R root:root build
+          cd build/bin
+          ./liballocator-tests.elf [unit]
