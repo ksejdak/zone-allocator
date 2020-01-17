@@ -36,9 +36,9 @@ jobs:
         ./liballocator-tests.elf [unit]
 
     - name: Generate coverage report
-        run: |
-          cd build
-          make coverage
+      run: |
+        cd build
+        make coverage
 
 #  test-linux-clang:
 #    runs-on: ubuntu-latest
