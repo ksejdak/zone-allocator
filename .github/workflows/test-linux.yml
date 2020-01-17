@@ -35,13 +35,15 @@ jobs:
         cd build/bin
         ./liballocator-tests.elf [unit]
 
-    - name: Generate and upload coverage report
+    - name: Generate coverage report
       run: |
-        if [ ${{ matrix.mode }} == Debug ]; then
-          cd build
-          make coverage
-          bash -c "bash <(curl -s https://codecov.io/bash) -t ${{ secrets.ACCESS_TOKEN_CODECOV }}"
-        fi
+        cd build
+        make coverage
+
+    - name: Upload coverage report
+      run: |
+        cd build
+        bash -c "bash <(curl -s https://codecov.io/bash) -t ${{ secrets.ACCESS_TOKEN_CODECOV }}"
 
   test-linux-clang:
     runs-on: ubuntu-latest
